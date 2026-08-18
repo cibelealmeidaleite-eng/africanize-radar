@@ -1,0 +1,21 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+# daily-radar.ts is a Scheduled Function: its cron ("0 12 * * *", i.e. 09:00
+# America/Sao_Paulo) is declared via `export const config = { schedule }`
+# inside the function file itself (Netlify Functions v2 syntax) — no extra
+# config needed here. Netlify already restricts invocation of scheduled
+# functions to its own internal trigger, so no manual blocking redirect is
+# necessary (an earlier version of this file had one, but its syntax was
+# invalid and Netlify reported it as an unprocessable redirect rule).
+
+# Single-page app fallback for React Router.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
